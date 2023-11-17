@@ -11,7 +11,12 @@ export default {
       naverUrl: "https://www.naver.com",
       age: 18,
       display: false,
-      animals: [ "monkey", "rat", "dog", "lion" ]
+      animals: [ "monkey", "rat", "dog", "lion" ],
+      users: [
+        { name: "scalper", job: "developer", gender: "male", skills: [ "html", "css", "javascript" ]},
+        { name: "john", job: "designer", gender: "male", skills: [ "html", "css", "javascript" ]},
+        { name: "jessi", job: "pm", gender: "female", skills: [ "html", "css", "javascript" ]}
+      ]
     };
   }
 };
@@ -56,8 +61,22 @@ export default {
   <h2 v-show="display">(show)보입니다!!</h2>
 
   <h2>{{ animals }}</h2>
-  <h2 v-for="a in animals" :key="a">{{ a }}</h2>
-  <h2 v-for="(a, index) in animals" :key="index">{{ a }} 인덱스 :: {{ index }}</h2>
+  <h2 v-for="animal in animals" :key="animal">{{ animal }}</h2>
+  <h2 v-for="(animal, index) in animals" :key="index">{{ animal }} 인덱스 :: {{ index }}</h2>
+  <ul>
+    <li v-for="(user, index) in users" :key="index">
+      이름은 {{ user.name }}이고 직업은 {{ user.job }}
+      <p v-for="skill in user.skills" :key="skill">{{ skill }}</p>
+    </li>
+  </ul>
+
+  <!-- <h2 v-for="(animal, index) in animals" :key="index">{{ animal }} 인덱스 :: {{ index }}</h2> -->
+  <!-- 위 코드에서 monkey 출력 안되게 할 때 -->
+  <!-- v-for와 v-if는 한 태그 내에서 동시 사용 불가능 -->
+  <!-- <template></template> 사용 -->
+  <template v-for="(animal, index) in animals" :key="index">
+    <h2 v-if="animal !== 'monkey'">{{ animal }} 인덱스 :: {{ index }}</h2>
+  </template>
 
 </template>
 
